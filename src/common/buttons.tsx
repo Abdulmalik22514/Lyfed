@@ -1,27 +1,21 @@
 import React, {FC} from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  TextStyle,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+import {TouchableOpacity, Text, StyleProp, ViewStyle} from 'react-native';
 import * as Colors from './colors';
 
 type ButtonProps = {
   title: string;
   onPress?: () => void;
-  next?: boolean;
+  isNext?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
-export const Button: FC<ButtonProps> = ({title, onPress, next, style}) => {
+export const Button: FC<ButtonProps> = ({title, onPress, isNext, style}) => {
   return (
     <TouchableOpacity
+      activeOpacity={0.8}
       onPress={onPress}
-      style={[styles.doneButton, next && styles.nextButton, style]}>
-      <Text style={[styles.doneText, next && styles.nextText, style]}>
+      style={[styles.doneButton, isNext && styles.nextButton, style]}>
+      <Text style={[styles.doneText, isNext && styles.nextText, style]}>
         {title}
       </Text>
     </TouchableOpacity>
@@ -34,7 +28,7 @@ const styles = {
     fontWeight: '700',
     letterSpacing: 0.5,
     fontSize: 16,
-  } as TextStyle,
+  },
   nextText: {
     color: Colors.White,
   },
@@ -51,9 +45,5 @@ const styles = {
   },
   nextButton: {
     backgroundColor: 'darkgreen',
-  },
-  modalView: {
-    backgroundColor: Colors.White,
-    height: 500,
   },
 };

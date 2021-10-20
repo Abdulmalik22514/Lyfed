@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
+  TextInputProps,
 } from 'react-native';
 import {DropDown} from '../../../../assets/Svg';
 import * as Images from '../../../../assets/images';
@@ -13,7 +14,12 @@ import {hp, wp} from '../../../common/utils';
 import * as Colors from '../../../common/colors';
 import {CountryProps} from '../CountryTypes';
 
-export const CountryBox = ({code, name, onPress}: CountryProps) => {
+export const CountryBox = ({
+  code,
+  name,
+  onPress,
+  ...rest
+}: CountryProps & TextInputProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.countryContainer}>
@@ -31,7 +37,8 @@ export const CountryBox = ({code, name, onPress}: CountryProps) => {
         <TextInput
           style={styles.textInput}
           placeholder="phone number"
-          keyboardType="numeric"
+          keyboardType="number-pad"
+          {...rest}
         />
       </View>
 
@@ -84,5 +91,6 @@ const styles = StyleSheet.create({
     width: wp(140),
     paddingRight: wp(5),
     fontSize: 18,
+    alignItems: 'center',
   },
 });
