@@ -120,34 +120,19 @@ export const OnboardingStyles = StyleSheet.create({
     marginHorizontal: wp(40),
     marginVertical: hp(20),
   },
-
-  // borderStyleBase: {
-  //   width: 30,
-  //   height: 45,
-  // },
-
-  // borderStyleHighLighted: {
-  //   borderColor: '#03DAC6',
-  // },
-
   underlineStyleBase: {
-    width: 75,
-    height: 55,
-    // borderWidth: 0,
+    width: 76,
+    height: 60,
     borderRadius: 10,
     backgroundColor: Colors.Border,
     color: 'black',
-
-    // borderBottomWidth: 1,
   },
-
   underlineStyleHighLighted: {
-    // borderColor: '#03DAC6',
-    // bo,
+    borderColor: '#03DAC6',
   },
   otpInput: {
     width: '100%',
-    height: hp(100),
+    height: hp(110),
     marginTop: hp(10),
     color: 'black',
     alignItems: 'center',
@@ -171,5 +156,40 @@ export const OnboardingStyles = StyleSheet.create({
     fontSize: 17,
     alignSelf: 'center',
     marginTop: hp(15),
+  },
+  profilePicture: {
+    color: Colors.Black,
+    fontSize: 18,
+  },
+  optionalText: {
+    color: Colors.Ash,
+  },
+  pictureContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: wp(40),
+    width: '100%',
+    height: hp(55),
+    borderWidth: 0.7,
+    borderColor: Colors.Ash,
+    borderRadius: 10,
+    marginTop: hp(7),
+  },
+  pictureText: {
+    color: 'darkblue',
+    fontSize: 17,
+    marginLeft: wp(20),
+    fontWeight: '600',
+  },
+  dateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  signupButton: {
+    borderWidth: 0.7,
+    borderColor: Colors.Ash,
+    color: Colors.Black,
+    marginTop: hp(17),
   },
 });
