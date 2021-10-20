@@ -1,12 +1,5 @@
-import React, {useRef, useState, useMemo} from 'react';
-import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  TextInputProps,
-  Alert,
-} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {Text, View, Image, TouchableOpacity, Alert} from 'react-native';
 import * as Colors from '../../common/colors';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import * as Images from '../../../assets/images';
@@ -19,11 +12,13 @@ import {CountryBox} from './components/CountryInput';
 import {SocialSignupCard, SocialSignupList} from './components/SignupButtons';
 import {CountriesCard} from './components/CountriesCard';
 import {Header} from '../../common/header';
-import OTPInputView, {
-  OTPInputViewState,
-} from '@twotalltotems/react-native-otp-input';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
 import {Agreement} from '../../common/agreement';
 import {hp} from '../../common/utils';
+import {UploadPicture} from '../../../assets/Svg';
+import {Input} from '../../common/input';
+import {DateContainer} from '../../common/dateBox';
+import {TextHeader} from '../../common/text';
 
 type ItemProps = {
   key: number;
@@ -144,7 +139,7 @@ export default function Onboarding() {
           index={-1}
           enablePanDownToClose
           ref={bottomSheetRef}
-          snapPoints={signupStage === 1 ? ['70%'] : ['75%']}>
+          snapPoints={signupStage === 1 ? ['70%'] : ['80%']}>
           {signupStage === 1 && (
             <>
               <Header
@@ -218,16 +213,44 @@ export default function Onboarding() {
               <Text style={styles.noOtp}>
                 Didn't get the OTP? <Text style={styles.resend}>Resend</Text>
               </Text>
-              <View style={{marginTop: hp(80)}}>
-                <Agreement />
-              </View>
+
+              <Agreement />
             </>
           )}
           {signupStage === 3 && (
             <>
-              <View>
-                <Text onPress={() => setSignupStage(2)}>fdhglsfdgl</Text>
+              <Header
+                heading="SignUp."
+                description="At Lyfed, we give information about Best Deals, Events, curated offers, sales & assured cashback for our customers."
+              />
+              <View style={{marginTop: hp(20)}}>
+                <Text style={styles.profilePicture}>
+                  Profile picture{' '}
+                  <Text style={styles.optionalText}>(optional)</Text>
+                </Text>
+
+                <TouchableOpacity
+                  style={styles.pictureContainer}
+                  activeOpacity={0.7}>
+                  <UploadPicture />
+                  <Text style={styles.pictureText}>Upload picture</Text>
+                </TouchableOpacity>
+                <Input label="Name" placeholder="Your name" />
+                <View style={{marginTop: hp(15)}}>
+                  <TextHeader label="Date of birth" />
+                  <View style={styles.dateContainer}>
+                    <DateContainer label="DD" />
+                    <DateContainer label="MM" />
+                    <DateContainer label="YYYY" isYear />
+                  </View>
+                </View>
+                <Button
+                  title="Next"
+                  style={styles.signupButton}
+                  onPress={() => setSignupStage(2)}
+                />
               </View>
+              <Agreement />
             </>
           )}
         </BottomSheet>
