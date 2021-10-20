@@ -19,15 +19,17 @@ export const Header = ({heading, description}: HeaderProps) => {
 
 const styles = StyleSheet.create({
   bottomSheetNumber: {
-    fontSize: 19,
+    fontSize: 20,
     fontWeight: '700',
     color: Colors.Black,
-    marginTop: hp(20),
+    marginTop: hp(10),
   },
   sendOTP: {
-    marginTop: hp(20),
-    fontSize: 16,
+    marginTop: hp(15),
+    fontSize: 17,
     fontWeight: '400',
     lineHeight: hp(22),
+    color: Colors.Ash,
+    // textAlign: 'justify',
   },
 });
