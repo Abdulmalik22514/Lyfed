@@ -1,5 +1,12 @@
 import React, {useRef, useState} from 'react';
-import {Text, View, Image, TouchableOpacity, Alert} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Alert,
+  FlatList,
+} from 'react-native';
 import * as Colors from '../../common/colors';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import * as Images from '../../../assets/images';
@@ -7,7 +14,7 @@ import {Button} from '../../common/buttons';
 import {OnboardingStyles as styles} from './style';
 import Modal from 'react-native-modal';
 import BottomSheet from '@gorhom/bottom-sheet';
-import {Countries, CountriesType} from './CountryTypes';
+import {CountryDetails, CountriesType, CountryProps} from './CountryTypes';
 import {CountryBox} from './components/CountryInput';
 import {SocialSignupCard, SocialSignupList} from './components/SignupButtons';
 import {CountriesCard} from './components/CountriesCard';
@@ -15,10 +22,11 @@ import {Header} from '../../common/header';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import {Agreement} from '../../common/agreement';
 import {hp} from '../../common/utils';
-import {UploadPicture} from '../../../assets/Svg';
+import {DropDown, UploadPicture} from '../../../assets/Svg';
 import {Input} from '../../common/input';
 import {DateContainer} from '../../common/dateBox';
 import {TextHeader} from '../../common/text';
+import {useCountries} from '../../hooks/useCountries';
 
 type ItemProps = {
   key: number;
@@ -49,9 +57,11 @@ const slides: RenderItemProps = [
 export default function Onboarding() {
   const [modalVisible, setModalVisible] = useState(false);
   const [code, setCode] = useState('');
-  const [country, setCountry] = useState<CountriesType>(Countries[0]);
+  const [country, setCountry] = useState<CountriesType>(CountryDetails[0]);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [signupStage, setSignupStage] = useState(1);
+
+  const {loading, countries} = useCountries();
 
   const [nextSlide, setNext] = useState(1);
 
@@ -59,6 +69,14 @@ export default function Onboarding() {
 
   const intro = useRef<AppIntroSlider>(null);
   const checkOTP = useRef<OTPInputView>(null);
+
+  const handleConfirmOTP = () => {
+    if (code === '1234') {
+      setSignupStage(3);
+    } else {
+      Alert.alert('', 'Wrong code');
+    }
+  };
 
   const handlePhoneLength = () => {
     if (phoneNumber.length === 10) {
@@ -68,12 +86,8 @@ export default function Onboarding() {
     }
   };
 
-  const handleConfirmOTP = () => {
-    if (code === '1234') {
-      setSignupStage(3);
-    } else {
-      Alert.alert('', 'Wrong code');
-    }
+  const FetchedCountries = ({item}: {item: CountryProps}) => {
+    return <CountriesCard onPress={() => selectCountry(item)} {...item} />;
   };
 
   const _renderItem = ({item: {image}}: {item: ItemProps}) => {
@@ -93,7 +107,7 @@ export default function Onboarding() {
     return (
       <Button
         title="Get started"
-        onPress={() => {
+        onPressButton={() => {
           bottomSheetRef.current?.snapToIndex(0);
         }}
       />
@@ -105,7 +119,7 @@ export default function Onboarding() {
       <Button
         title="Next"
         isNext
-        onPress={() => intro.current?.goToSlide(nextSlide, true)}
+        onPressButton={() => intro.current?.goToSlide(nextSlide, true)}
       />
     );
   };
@@ -137,6 +151,10 @@ export default function Onboarding() {
         <BottomSheet
           style={styles.bottomSheetStyles}
           index={-1}
+          onClose={() => {
+            setCountry(CountryDetails[0]);
+            setPhoneNumber('');
+          }}
           enablePanDownToClose
           ref={bottomSheetRef}
           snapPoints={signupStage === 1 ? ['70%'] : ['80%']}>
@@ -147,11 +165,9 @@ export default function Onboarding() {
                 description="We will send you a 4-digit OTP to your phone number for verification"
               />
               <CountryBox
-                onPress={() => {
-                  setModalVisible(true);
-                }}
+                onPress={() => setModalVisible(true)}
+                short_name={country.short_name}
                 code={country.code}
-                name={country.name}
                 value={phoneNumber}
                 onChangeText={setPhoneNumber}
                 onSubmitEditing={handlePhoneLength}
@@ -159,7 +175,8 @@ export default function Onboarding() {
               <Button
                 title="send OTP"
                 style={styles.button}
-                onPress={handlePhoneLength}
+                styleText={styles.sendOTPButton}
+                onPressButton={handlePhoneLength}
               />
               <Text style={styles.orText}>Or</Text>
               <View style={styles.signupOptions}>
@@ -168,7 +185,7 @@ export default function Onboarding() {
                     <SocialSignupCard
                       key={index}
                       icon={item.icon}
-                      onPress={() => setModalVisible(false)}
+                      onPress={() => setSignupStage(3)}
                     />
                   );
                 })}
@@ -176,7 +193,6 @@ export default function Onboarding() {
               <Agreement />
             </>
           )}
-
           {signupStage === 2 && (
             <>
               <Header
@@ -207,11 +223,15 @@ export default function Onboarding() {
               />
               <Button
                 title="Verify & continue"
-                style={styles.verifyOtp}
-                onPress={() => setSignupStage(3)}
+                style={styles.verifyButton}
+                styleText={styles.verifyButtonTitle}
+                onPressButton={() => setSignupStage(3)}
               />
               <Text style={styles.noOtp}>
-                Didn't get the OTP? <Text style={styles.resend}>Resend</Text>
+                Didn't get the OTP?{' '}
+                <Text style={styles.resend} onPress={() => setSignupStage(2)}>
+                  Resend
+                </Text>
               </Text>
 
               <Agreement />
@@ -230,6 +250,7 @@ export default function Onboarding() {
                 </Text>
 
                 <TouchableOpacity
+                  onPress={() => setSignupStage(2)}
                   style={styles.pictureContainer}
                   activeOpacity={0.7}>
                   <UploadPicture />
@@ -247,28 +268,46 @@ export default function Onboarding() {
                 <Button
                   title="Next"
                   style={styles.signupButton}
-                  onPress={() => setSignupStage(2)}
+                  styleText={styles.nextStage3}
+                  onPressButton={() => setSignupStage(4)}
                 />
               </View>
               <Agreement />
             </>
           )}
+          {signupStage === 4 && (
+            <>
+              <Header
+                style={styles.detailsHeader}
+                heading="A few more details."
+                description="Please fill in the following boxes to complete your registration to get started."
+              />
+              <TextHeader label="Gender" />
+              <View style={styles.genderSelection}>
+                <Text style={styles.gender}>Select gender</Text>
+                <TouchableOpacity activeOpacity={0.7}>
+                  <DropDown />
+                </TouchableOpacity>
+              </View>
+              <Input label="Email address" placeholder="Your email address" />
+              <Input label="Phone number" isPhone />
+              <Button
+                title="Create new account"
+                style={styles.accountButton}
+                styleText={styles.textStyle}
+                onPressButton={() => setSignupStage(3)}
+              />
+              <Agreement />
+            </>
+          )}
         </BottomSheet>
-
         <Modal isVisible={modalVisible} hasBackdrop backdropOpacity={0.7}>
           <View>
-            <View style={styles.modalView}>
-              {Countries.map((item, index) => {
-                return (
-                  <CountriesCard
-                    key={index}
-                    code={item.code}
-                    name={item.name}
-                    onPress={() => selectCountry(item)}
-                  />
-                );
-              })}
-            </View>
+            <FlatList
+              style={styles.modalView}
+              data={countries}
+              renderItem={FetchedCountries}
+            />
           </View>
         </Modal>
       </View>
