@@ -3,6 +3,9 @@ import {StyleSheet} from 'react-native';
 import {hp, wp} from '../../common/utils';
 
 export const OnboardingStyles = StyleSheet.create({
+  detailsHeader: {
+    marginBottom: hp(20),
+  },
   slide: {
     width: wp(360),
     height: hp(250),
@@ -106,12 +109,15 @@ export const OnboardingStyles = StyleSheet.create({
   },
   button: {
     backgroundColor: Colors.Purple,
+  },
+  sendOTPButton: {
     color: Colors.White,
   },
   orText: {
     fontSize: 17,
     alignSelf: 'center',
     color: Colors.Black,
+    fontWeight: '500',
   },
   signupOptions: {
     flexDirection: 'row',
@@ -138,8 +144,10 @@ export const OnboardingStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  verifyOtp: {
+  verifyButton: {
     backgroundColor: Colors.Purple,
+  },
+  verifyButtonTitle: {
     color: 'white',
   },
   editNumber: {
@@ -151,6 +159,7 @@ export const OnboardingStyles = StyleSheet.create({
   resend: {
     color: Colors.Purple,
     fontWeight: '500',
+    height: hp(20),
   },
   noOtp: {
     fontSize: 17,
@@ -189,7 +198,31 @@ export const OnboardingStyles = StyleSheet.create({
   signupButton: {
     borderWidth: 0.7,
     borderColor: Colors.Ash,
-    color: Colors.Black,
     marginTop: hp(17),
+  },
+  genderSelection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: wp(20),
+    width: '100%',
+    height: hp(55),
+    borderWidth: 0.7,
+    borderColor: Colors.Ash,
+    borderRadius: 10,
+    marginTop: hp(7),
+    justifyContent: 'space-between',
+  },
+  gender: {
+    fontSize: 17,
+  },
+  accountButton: {
+    backgroundColor: Colors.Purple,
+    marginTop: hp(20),
+  },
+  textStyle: {
+    color: 'white',
+  },
+  nextStage3: {
+    color: Colors.Black,
   },
 });
