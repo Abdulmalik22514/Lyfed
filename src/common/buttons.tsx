@@ -1,21 +1,35 @@
 import React, {FC} from 'react';
-import {TouchableOpacity, Text, StyleProp, ViewStyle} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 import * as Colors from './colors';
+import {hp} from './utils';
 
-type ButtonProps = {
+type ButtonPropsType = {
   title: string;
-  onPress?: () => void;
+  onPressButton?: () => void;
   isNext?: boolean;
   style?: StyleProp<ViewStyle>;
+  styleText?: StyleProp<TextStyle>;
 };
 
-export const Button: FC<ButtonProps> = ({title, onPress, isNext, style}) => {
+export const Button: FC<ButtonPropsType> = ({
+  title,
+  onPressButton,
+  isNext,
+  style,
+  styleText,
+}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={onPress}
+      onPress={onPressButton}
       style={[styles.doneButton, isNext && styles.nextButton, style]}>
-      <Text style={[styles.doneText, isNext && styles.nextText, style]}>
+      <Text style={[styles.doneText, isNext && styles.nextText, styleText]}>
         {title}
       </Text>
     </TouchableOpacity>
@@ -35,13 +49,13 @@ const styles = {
   doneButton: {
     backgroundColor: Colors.White,
     width: '100%',
-    height: 60,
+    height: hp(57),
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
-    marginTop: 10,
-    marginBottom: 20,
+    marginTop: hp(10),
+    marginBottom: hp(20),
   },
   nextButton: {
     backgroundColor: 'darkgreen',
