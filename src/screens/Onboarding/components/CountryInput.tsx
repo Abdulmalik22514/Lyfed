@@ -9,31 +9,32 @@ import {
   TextInputProps,
 } from 'react-native';
 import {DropDown} from '../../../../assets/Svg';
-import * as Images from '../../../../assets/images';
 import {hp, wp} from '../../../common/utils';
 import * as Colors from '../../../common/colors';
 import {CountryProps} from '../CountryTypes';
 
 export const CountryBox = ({
   code,
-  name,
+  short_name,
   onPress,
+  imageLink,
+  id,
   ...rest
 }: CountryProps & TextInputProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.countryContainer}>
         <Image
-          source={Images.IranFlag}
+          source={{uri: imageLink}}
           style={styles.flag}
           resizeMode="contain"
         />
         <View style={styles.country}>
-          <Text style={styles.countryName}>{name}</Text>
+          <Text style={styles.countryName}>{short_name}</Text>
         </View>
 
         <View style={styles.divider} />
-        <Text style={styles.countryName}>{`+${code}`}</Text>
+        <Text style={styles.countryName}>{code}</Text>
         <TextInput
           style={styles.textInput}
           placeholder="phone number"
