@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react';
-import {CountriesType} from '../screens/Onboarding/CountryTypes';
+import {CountriesType} from '../screens/Onboarding/types';
 
 export const useCountries = () => {
   const [loading, setLoading] = useState(false);
