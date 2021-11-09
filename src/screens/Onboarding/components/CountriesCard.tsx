@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import {hp, wp} from '../../../common/utils';
 import * as Colors from '../../../common/colors';
-import {CountryProps} from '../CountryTypes';
+import {CountryProps} from '../types';
 
 export const CountriesCard = ({
   code,

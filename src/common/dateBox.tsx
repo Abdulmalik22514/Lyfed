@@ -3,6 +3,7 @@ import {
   StyleProp,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
   ViewStyle,
@@ -26,8 +27,8 @@ export const DateContainer = ({
 }: DateContainerProps) => {
   return (
     <View style={[styles.container, isYear && styles.isYear, style]}>
-      <Text style={styles.label}>{label}</Text>
-      <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
+      <TextInput style={styles.label} placeholder={label} />
+      <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
         <DropDown />
       </TouchableOpacity>
     </View>

@@ -11,7 +11,7 @@ import {
 import {DropDown} from '../../../../assets/Svg';
 import {hp, wp} from '../../../common/utils';
 import * as Colors from '../../../common/colors';
-import {CountryProps} from '../CountryTypes';
+import {CountryProps} from '../types';
 
 export const CountryBox = ({
   code,
