@@ -5,7 +5,6 @@ import {hp} from './utils';
 
 export const Agreement = () => {
   const insets = useSafeAreaInsets();
-  console.log(insets);
 
   return (
     <View style={[styles.container, {bottom: insets.bottom || hp(15)}]}>

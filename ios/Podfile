@@ -14,6 +14,10 @@ target 'Lyfed' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
+  pod 'RNCPicker', :path => '../node_modules/@react-native-picker/picker'
+
   target 'LyfedTests' do
     inherit! :complete
     # Pods for testing
