@@ -48,9 +48,10 @@ export const SignupStage4 = ({onPressCreate}: StageFourProp) => {
             borderColor: Colors.Ash,
             borderRadius: 10,
             marginTop: hp(7),
+            justifyContent: 'center',
           },
           placeholder: {
-            fontSize: 30,
+            fontSize: 20,
           },
         }}
       />

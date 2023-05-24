@@ -1,5 +1,12 @@
 import React, {useRef, useState} from 'react';
-import {Text, View, Image, Alert, FlatList} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  Alert,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import * as Colors from '../../common/colors';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Button} from '../../common/buttons';
@@ -45,6 +52,7 @@ export default function Onboarding() {
   const handlePhoneLength = () => {
     if (phoneNumber.length === 10) {
       setSignupStage(2);
+      setPhoneNumber('');
     } else {
       Alert.alert('Error', 'Phone number incorrect');
     }
@@ -148,18 +156,22 @@ export default function Onboarding() {
             />
           )}
           {signupStage === 4 && (
-            <SignupStage4 onPressCreate={() => setSignupStage(3)} />
+            <SignupStage4 onPressCreate={() => setSignupStage(1)} />
           )}
           <Agreement />
         </BottomSheet>
         <Modal isVisible={modalVisible} hasBackdrop backdropOpacity={0.7}>
-          <View>
-            <FlatList
-              style={styles.modalView}
-              data={countries}
-              renderItem={FetchedCountries}
-            />
-          </View>
+          {loading ? (
+            <ActivityIndicator size={'large'} color={'purple'} />
+          ) : (
+            <View>
+              <FlatList
+                style={styles.modalView}
+                data={countries}
+                renderItem={FetchedCountries}
+              />
+            </View>
+          )}
         </Modal>
       </View>
     </>

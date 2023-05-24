@@ -39,6 +39,7 @@ export const CountryBox = ({
           style={styles.textInput}
           placeholder="phone number"
           keyboardType="number-pad"
+          maxLength={10}
           {...rest}
         />
       </View>

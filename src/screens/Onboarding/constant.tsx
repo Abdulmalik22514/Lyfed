@@ -10,15 +10,15 @@ export const SLIDES: RenderItemProps = [
   },
   {
     key: 2,
-    image: Images.Onboarding2,
+    image: Images.Onboarding3,
   },
   {
     key: 3,
-    image: Images.Onboarding2,
+    image: Images.Onboarding4,
   },
   {
     key: 4,
-    image: Images.Onboarding2,
+    image: Images.Onboarding5,
   },
 ];
 
